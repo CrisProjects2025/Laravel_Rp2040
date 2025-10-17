@@ -11,8 +11,11 @@ Route::post('/door-control', function (Request $request) {
 });
 
 
+Route::get('/door', function () {
+    
+    return "Ok choko";
 
-
+}
 
 
 Route::get('/', function () {
