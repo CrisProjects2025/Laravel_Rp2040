@@ -7,12 +7,14 @@
         <h1 class="text-2xl font-bold text-blue-600 mb-4">Baratronics Solar Control</h1>
 
         <div class="space-y-2 text-white">
-            <div><strong>Light:</strong> <span id="light">--</span></div>
-            <div><strong>Status:</strong> <span id="status">--</span></div>
-            <div><strong>Mode:</strong> <span id="mode">--</span></div>
-            <div><strong>Temperature:</strong> <span id="temp">--</span></div>
-            <div><strong>Humidity:</strong> <span id="hum">--</span></div>
-            <div><strong>Last Update:</strong> <span id="time">--</span></div>
+            <div>Light: <span id="light">—</span></div>
+            <div>Status: <span id="status">—</span></div>
+            <div>Mode: <span id="mode">—</span></div>
+            <div>Temperature: <span id="temperature">—</span></div>
+            <div>Humidity: <span id="humidity">—</span></div>
+            <div>Last Update: <span id="last-update">—</span></div>
+
+
         </div>
 
         <hr class="my-4">
@@ -25,3 +27,27 @@
 
     @vite(['resources/js/door-control.js'])
 </x-app-layout>
+
+
+
+<script>
+function fetchTelemetry() {
+    fetch('/door-control-data')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('light').textContent = data.Light;
+            document.getElementById('mode').textContent = data.Mode;
+            document.getElementById('status').textContent = data.Status;
+            document.getElementById('temperature').textContent = data.Temperature;
+            document.getElementById('humidity').textContent = data.Humidity;
+            document.getElementById('last-update').textContent = data.LastUpdate;
+        })
+        .catch(error => console.error('Error fetching telemetry:', error));
+}
+
+// Refresh every 5 seconds
+setInterval(fetchTelemetry, 5000);
+fetchTelemetry(); // Initial load
+</script>
+
+
