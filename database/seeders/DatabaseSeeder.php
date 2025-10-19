@@ -18,9 +18,10 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Cris',
-            'email' => 'test@example.com',
+            'email' => 'cris.sa@baratronics.com',
+            'password' =>'cris.sa@baratronics.com',
         ]);
 
-        Sensor::factory(5)->create();
+        //Sensor::factory(5)->create();
     }
 }

@@ -5,14 +5,17 @@
      class="mx-auto w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 mb-4">
 
         <h1 class="text-2xl font-bold text-blue-600 mb-4">Baratronics Solar Control</h1>
+        {{ dump($doorControls) }}
 
         <div class="space-y-2 text-white">
-            <div>Light: <span id="light">—</span></div>
+            <div>Last Update: <span>{{ $doorControls}}</span></div>
+            <div>Light: <span id="light">5</span></div>
             <div>Status: <span id="status">—</span></div>
             <div>Mode: <span id="mode">—</span></div>
-            <div>Temperature: <span id="temperature">—</span></div>
+            <div>Temperature: <span id="temperature">444</span></div>
             <div>Humidity: <span id="humidity">—</span></div>
             <div>Last Update: <span id="last-update">—</span></div>
+    
 
 
         </div>

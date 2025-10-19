@@ -5,47 +5,64 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class sensorController extends Controller
+class SensorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Sensor::all();
+        return Sensor::latest()->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+public function store(Request $request)
+{
+    try {
+        $data = $request->validate([
+            'device_id'   => ['required','string','max:100'],
+            'temperature' => ['required','numeric'],
+            'humidity'    => ['required','numeric'],
+            'measured_at' => ['nullable','date'],
+        ]);
+
+        $sensor = Sensor::create($data);
+
+        return response()->json([
+            'message' => 'Sensor creado',
+            'data' => $sensor
+        ], 201);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'message' => 'Error al crear el sensor',
+            'error' => app()->hasDebugModeEnabled() ? $e->getMessage() : 'Server error'
+        ], 500);
+    }
+}
+
+
+
+
+    public function show(Sensor $sensor) // Route Model Binding
     {
-        $data = Sensor::create($request);
-        return response()->json($data,201);
+        return $sensor;
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, Sensor $sensor)
     {
-        //
+        $data = $request->validate([
+            'device_id'   => ['sometimes','string','max:100'],
+            'temperature' => ['sometimes','numeric'],
+            'humidity'    => ['sometimes','numeric'],
+            'measured_at' => ['sometimes','date'],
+        ]);
+
+        $sensor->update($data);
+
+        return response()->json($sensor, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Sensor $sensor)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $sensor->delete();
+        return response()->json(null, 204);
     }
 }

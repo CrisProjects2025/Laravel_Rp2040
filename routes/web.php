@@ -24,9 +24,13 @@ Route::post('/door-control', function (Request $request) {
 
 
 
-Route::get('/door-control-view', function () {    
-    return view('door-control',);
-});
+Route::get('/door-control-view', function () {   
+    $doorControls = Sensor::latest()->get();  
+    return view('door-control', compact('doorControls'));
+    
+   // return view('door-control',);
+
+})->name('door-control');
 
 Route::get('/door-control-data', function () {
     $telemetry = session('telemetry', [

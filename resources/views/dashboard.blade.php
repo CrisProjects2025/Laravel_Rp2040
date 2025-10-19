@@ -17,7 +17,7 @@
 
 
     <div class="flex justify-center gap-4 mt-6">
-    <a href="{{ route('door.control') }}" target="_blank"
+    <a href="{{ route('door-control') }}" target="_blank"
        class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
         Door Control
     </a>

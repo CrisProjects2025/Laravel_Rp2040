@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('sensors', function (Blueprint $table) {
             $table->id();          
             
-            $table->string('body');
+            $table->string('device_id', 100);
+            $table->decimal('temperature', 5, 2);
+            $table->decimal('humidity', 5, 2);
+            $table->timestamp('measured_at')->nullable();
+
             //$table->timestamp('timestamp')->default(DB::raw('CURRENT_TIMESTAMP'))->nullable();  // Stores current timestamp
             //$table->integer('Light');  // Stores light intensity as an integer
             //$table->string('open_or_close')->default('unknown');  // Stores status (open/close/unknown)
